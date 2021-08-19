@@ -25,11 +25,11 @@ end
 // Sample COPI on SCK falling edge
 reg read=0;
 always @(negedge sck_edge) if (~cs) begin
-    if (cnt == 1) read = copi;  // only response to 'read' cmd
-    shift = {shift[DW-2:0], copi};
+    if (cnt == 1) read <= copi;  // only response to 'read' cmd
+    shift <= {shift[DW-2:0], copi};
     if (cnt == DW) begin
         $display("Time:     %g ns, spi_model_%1d got: 0x%x, '%c'", $time, ID, shift, shift);
-        read = 0;
+        read <= 0;
     end
 end
 
