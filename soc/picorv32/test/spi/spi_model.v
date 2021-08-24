@@ -9,15 +9,19 @@ module spi_model #(
     input copi,
     output cipo
 );
-
 reg [DW-1:0] shift=0;
+/* verilator lint_save */
+/* verilator lint_off MULTIDRIVEN */
 reg [5:0] cnt=0;
+/* verilator lint_restore */
 reg [DW-1:0] rom=0;
 wire sck_edge = CPOL ? ~sck : sck; // convert to CPOL=0
 
+always @(negedge cs) cnt <= 0;
+
 // CIPO changes on SCK rising edge
 always @(posedge sck_edge) if (~cs) begin
-    cnt <= (cnt==DW) ? 1 : cnt + 1'b1;
+    cnt <= (cnt==DW) ? 0 : cnt + 1'b1;
     if (cnt==0) rom <= ROM;
     else rom <= {rom[DW-2:0], rom[DW-1]};
 end
