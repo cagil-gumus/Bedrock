@@ -3,7 +3,16 @@
 // ------------------------------------
 // eth_gtx_bridge.v
 //
+// DEPRECATED
 // Wrapper around rtefi_blob and eth_gtx_hook with a TX/RX path width conversion for GTX compatibility
+// Note that this module "just" instantiates two others:
+// eth_gtx_hook and rtefi_blob.
+// If you keep them separate, that gives you a valuable opportunity
+// to put your simulated design on a test network.
+// Look in the badger/tests directory for examples and tools to support
+// this technique, using GMII ports of rtefi_blob.
+// Similar capabilities don't exist for the 20-bit ports coming out of this
+// module, that is meant for attachment to the Xilinx GTX/GTP interface.
 // ------------------------------------
 
 module eth_gtx_bridge #(
